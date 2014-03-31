@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "iPhoneSimulatorRemoteClient.h"
+#import "DVTiPhoneSimulatorRemoteClient.h"
 
 @class DTiPhoneSimulatorSystemRoot;
 

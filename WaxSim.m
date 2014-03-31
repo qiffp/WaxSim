@@ -1,5 +1,5 @@
 #import <AppKit/AppKit.h>
-#import "iPhoneSimulatorRemoteClient.h"
+#import "DVTiPhoneSimulatorRemoteClient.h"
 #import "Simulator.h"
 #import "termios.h"
 
@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
     char *sdk = nil;
 	char *family = nil;
     char *appPath = nil;
-    char *videoPath = nil;
 	NSMutableArray *additionalArgs = [NSMutableArray array];
 	NSMutableDictionary *environment = [NSMutableDictionary dictionary];
 	NSString *environment_variable;
@@ -40,13 +39,10 @@ int main(int argc, char *argv[]) {
                 for (NSString *sdkVersion in [Simulator availableSDKs]) {
                     fprintf(stderr, "  %s\n", [sdkVersion UTF8String]);
                 }
-                return 1; 
+                return 1;
             case 'h':
                 printUsage();
-                return 1;                 
-            case 'v':
-                videoPath = optarg;
-                break;
+                return 1;
             case '?':
                 if (optopt == 's' || optopt == 'f') {
                     fprintf(stderr, "Option -%c requires an argument.\n", optopt);
@@ -82,9 +78,8 @@ int main(int argc, char *argv[]) {
     NSString *sdkString = sdk ? @(sdk) : nil;
 	NSString *familyString = family ? @(family) : nil;
     NSString *appPathString = @(appPath);
-    NSString *videoPathString = videoPath ? @(videoPath) : nil;
 
-    Simulator *simulator = [[Simulator alloc] initWithAppPath:appPathString sdk:sdkString family:familyString video:videoPathString env:environment args:additionalArgs];
+    Simulator *simulator = [[Simulator alloc] initWithAppPath:appPathString sdk:sdkString family:familyString env:environment args:additionalArgs];
     [simulator launch];
 
     [[NSRunLoop mainRunLoop] run];
@@ -99,7 +94,6 @@ void printUsage() {
     fprintf(stderr, "\t-f family\tDevice to use (-f ipad)\n");
     fprintf(stderr, "\t-e VAR=value\tEnvironment variable to set (-e CFFIXED_HOME=/tmp/iphonehome)\n");
     fprintf(stderr, "\t-a \tAvailable SDKs\n");
-    fprintf(stderr, "\t-v path\tOutput video recording at path\n");
     fprintf(stderr, "\t-h \tPrints out this wonderful documentation!\n");    
 }
 
