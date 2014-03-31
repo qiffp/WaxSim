@@ -24,10 +24,10 @@ int main(int argc, char *argv[]) {
     while ((c = getopt(argc, argv, "e:s:f:v:ah")) != -1) {
         switch(c) {
 			case 'e':
-				environment_variable = [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
+				environment_variable = @(optarg);
 				environment_variable_parts = [environment_variable componentsSeparatedByString:@"="];
 
-				[environment setObject:[environment_variable_parts objectAtIndex:1] forKey:[environment_variable_parts objectAtIndex:0]];
+				environment[environment_variable_parts[0]] = environment_variable_parts[1];
 				break;
             case 's':
                 sdk = optarg;
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 
 		// Additional args are sent to app
 		for (int i = optind; i < argc; i++) {
-			[additionalArgs addObject:[NSString stringWithUTF8String:argv[i]]];
+			[additionalArgs addObject:@(argv[i])];
 		}
     }
     else {
@@ -79,10 +79,10 @@ int main(int argc, char *argv[]) {
     }
     
     
-    NSString *sdkString = sdk ? [NSString stringWithUTF8String:sdk] : nil;
-	NSString *familyString = family ? [NSString stringWithUTF8String:family] : nil;
-    NSString *appPathString = [NSString stringWithUTF8String:appPath];
-    NSString *videoPathString = videoPath ? [NSString stringWithUTF8String:videoPath] : nil;
+    NSString *sdkString = sdk ? @(sdk) : nil;
+	NSString *familyString = family ? @(family) : nil;
+    NSString *appPathString = @(appPath);
+    NSString *videoPathString = videoPath ? @(videoPath) : nil;
 
     Simulator *simulator = [[Simulator alloc] initWithAppPath:appPathString sdk:sdkString family:familyString video:videoPathString env:environment args:additionalArgs];
     [simulator launch];
