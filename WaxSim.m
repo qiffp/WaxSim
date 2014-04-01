@@ -51,11 +51,10 @@ int main(int argc, char *argv[]) {
                 printUsage();
                 return 1;
             case '?':
-                if (optopt == 's' || optopt == 'f') {
+                if (optopt == 's' || optopt == 'd') {
                     fprintf(stderr, "Option -%c requires an argument.\n", optopt);
                     printUsage();
-                }
-                else {
+                } else {
                     fprintf(stderr, "Unknown option `-%c'.\n", optopt);
                     printUsage();
                 }
@@ -80,7 +79,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-    
     NSString *sdkString = sdk ? @(sdk) : nil;
 	NSString *deviceString = device ? @(device) : nil;
     NSString *appPathString = @(appPath);
@@ -93,7 +91,7 @@ int main(int argc, char *argv[]) {
 }
 
 void printUsage() {
-    fprintf(stderr, "usage: waxsim [options] app-path\n");
+    fprintf(stderr, "\nusage: waxsim [options] app-path\n");
     fprintf(stderr, "example: waxsim -s 2.2 /path/to/app.app\n");
     fprintf(stderr, "Available options are:\n");    
     fprintf(stderr, "\t-s sdk\tVersion number of sdk to use (-s 6.1). Defaults to the latest SDK available.\n");
