@@ -7,14 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "DVTiPhoneSimulatorRemoteClient.h"
+#import "iPhoneSimulatorRemoteClient.h"
 
 @class DTiPhoneSimulatorSystemRoot;
 
 @interface Simulator : NSObject <DTiPhoneSimulatorSessionDelegate> {
     NSString *_appPath;
     DTiPhoneSimulatorSystemRoot *_sdk;
-	NSNumber *_family;
+	NSString *_device;
     DTiPhoneSimulatorSession* _session;
 	NSDictionary *_env;
 	NSArray *_args;
@@ -24,7 +24,7 @@
 
 + (NSArray *)availableSDKs;
 
-- (id)initWithAppPath:(NSString *)appPath sdk:(NSString *)sdk family:(NSString *)family env:(NSDictionary *)env args:(NSArray *)args;
+- (id)initWithAppPath:(NSString *)appPath sdk:(NSString *)sdk device:(NSString *)device env:(NSDictionary *)env args:(NSArray *)args;
 - (int)launch;
 - (void)end;
 

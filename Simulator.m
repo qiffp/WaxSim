@@ -16,25 +16,26 @@
 
 @implementation Simulator
 
-- (id)initWithAppPath:(NSString *)appPath sdk:(NSString *)sdk family:(NSString *)family env:(NSDictionary *)env args:(NSArray *)args
+- (id)initWithAppPath:(NSString *)appPath sdk:(NSString *)sdk device:(NSString *)device env:(NSDictionary *)env args:(NSArray *)args
 {
     self = [super init];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![appPath isAbsolutePath]) {        
+    if ([appPath isAbsolutePath] == NO) {
         appPath = [[fileManager currentDirectoryPath] stringByAppendingPathComponent:appPath];
     }   
     
     _appPath = appPath;
 
-    if (![fileManager fileExistsAtPath:_appPath]) {
+    if ([fileManager fileExistsAtPath:_appPath] == NO) {
         WaxLog(@"App path '%@' does not exist!", _appPath);
         exit(EXIT_FAILURE);
     }
 
-    if (!sdk) _sdk = [DTiPhoneSimulatorSystemRoot defaultRoot];
-    else {
+    if (sdk) {
         _sdk = [DTiPhoneSimulatorSystemRoot rootWithSDKVersion:sdk];
+    } else {
+        _sdk = [DTiPhoneSimulatorSystemRoot defaultRoot];
     }
     
     if (!_sdk) {
@@ -47,12 +48,7 @@
         exit(EXIT_FAILURE);
     }
 	
-	if ([family isEqualToString: @"ipad"]) {
-		_family = @2;
-	} else {
-		_family = @1;
-	}
-	
+	_device = [self validateDevice:device];
 	_env = env;
 	_args = args;
 
@@ -62,7 +58,7 @@
 + (NSArray *)availableSDKs
 {
     NSMutableArray *sdks = [NSMutableArray array];
-    for (id root in [DTiPhoneSimulatorSystemRoot knownRoots]) {
+    for (DTiPhoneSimulatorSystemRoot *root in [DTiPhoneSimulatorSystemRoot knownRoots]) {
         [sdks addObject:[root sdkVersion]];
     }
     
@@ -84,7 +80,7 @@
     DTiPhoneSimulatorSessionConfig *config = [[DTiPhoneSimulatorSessionConfig alloc] init];
     [config setApplicationToSimulateOnStart:appSpec];
     [config setSimulatedSystemRoot:sdkRoot];
-	[config setSimulatedDeviceFamily:_family];
+    [config setSimulatedDeviceInfoName:_device];
     [config setSimulatedApplicationShouldWaitForDebugger:NO];    
     [config setSimulatedApplicationLaunchArgs:_args];
     [config setSimulatedApplicationLaunchEnvironment:_env];
@@ -102,7 +98,7 @@
     [_session setDelegate:self];
     
     NSError *error;
-    if (![_session requestStartWithConfig:config timeout:30 error:&error]) {
+    if ([_session requestStartWithConfig:config timeout:30 error:&error] == NO) {
         WaxLog(@"Could not start simulator session: %@", [error localizedDescription]);
         return EXIT_FAILURE;
     }
@@ -115,11 +111,23 @@
     [_session requestEndWithTimeout:0];
 }
 
+- (NSString *)validateDevice:(NSString *)device
+{
+	NSArray *validDevices = @[@"iPhone", @"iPad"];
+	for (NSString *validDevice in validDevices) {
+		if ([device compare:validDevice options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+			return validDevice;
+		}
+	}
+	
+	return @"iPhone";
+}
+
 // DTiPhoneSimulatorSession Delegate
 // ---------------------------------
 - (void)session:(DTiPhoneSimulatorSession *)session didStart:(BOOL)started withError:(NSError *)error
 {
-    if (!started) {
+    if (started == NO) {
         WaxLog(@"Session failed to start. %@", [error localizedDescription]);
         exit(EXIT_FAILURE);
     }
@@ -129,7 +137,10 @@
 {
     if (error) {
         WaxLog(@"Session ended with error. %@", [error localizedDescription]);
-        if ([error code] != 2) exit(EXIT_FAILURE); // if it is a timeout error, that's cool. We are probably rebooting
+        if ([error code] != 2) {
+			// if it is a timeout error, that's cool. We are probably rebooting
+			exit(EXIT_FAILURE);
+		}
     } else {
         exit(EXIT_SUCCESS);
     }
