@@ -96,10 +96,10 @@ void printUsage() {
     fprintf(stderr, "usage: waxsim [options] app-path\n");
     fprintf(stderr, "example: waxsim -s 2.2 /path/to/app.app\n");
     fprintf(stderr, "Available options are:\n");    
-    fprintf(stderr, "\t-s sdk\tVersion number of sdk to use (-s 3.1). Without this, the default SDK is used.\n");
+    fprintf(stderr, "\t-s sdk\tVersion number of sdk to use (-s 6.1). Defaults to the latest SDK available.\n");
     fprintf(stderr, "\t-d device\tDevice to use (-d iPad). Options are 'iPad' and 'iPhone'. Defaults to iPhone.\n");
     fprintf(stderr, "\t-e VAR=value\tEnvironment variable to set (-e CFFIXED_HOME=/tmp/iphonehome)\n");
-    fprintf(stderr, "\t-a \tList available SDKs.\n");
+    fprintf(stderr, "\t-a \tLists the available SDKs.\n");
     fprintf(stderr, "\t-h \tPrints out this wonderful documentation!\n");    
 }
 
