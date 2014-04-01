@@ -36,8 +36,8 @@
 		8DD76FA10486AA7600D96B5E /* waxsim */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = waxsim; sourceTree = BUILT_PRODUCTS_DIR; };
 		923F258B18EA09F400A845ED /* DVTiPhoneSimulatorRemoteClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DVTiPhoneSimulatorRemoteClient.h; path = iPhoneSimulatorRemoteClient/DVTiPhoneSimulatorRemoteClient.h; sourceTree = "<group>"; };
 		923F258C18EA0B8E00A845ED /* DVTiPhoneSimulatorRemoteClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTiPhoneSimulatorRemoteClient.framework; path = Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/DVTiPhoneSimulatorRemoteClient.framework; sourceTree = DEVELOPER_DIR; };
-		923F258E18EAFB8100A845ED /* DevToolsFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsFoundation.framework; path = ../../../../../Applications/Xcode.app/Contents/OtherFrameworks/DevToolsFoundation.framework; sourceTree = "<group>"; };
-		923F259018EAFB8F00A845ED /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = ../../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<group>"; };
+		923F258E18EAFB8100A845ED /* DevToolsFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevToolsFoundation.framework; path = /Applications/Xcode.app/Contents/OtherFrameworks/DevToolsFoundation.framework; sourceTree = "<absolute>"; };
+		923F259018EAFB8F00A845ED /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = /Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<absolute>"; };
 		923F259318EB113700A845ED /* iPhoneSimulatorRemoteClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPhoneSimulatorRemoteClient.h; path = iPhoneSimulatorRemoteClient/iPhoneSimulatorRemoteClient.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,8 +59,6 @@
 		08FB7794FE84155DC02AAC07 /* WaxSim */ = {
 			isa = PBXGroup;
 			children = (
-				923F259018EAFB8F00A845ED /* DVTFoundation.framework */,
-				923F258E18EAFB8100A845ED /* DevToolsFoundation.framework */,
 				923F258918EA098A00A845ED /* iPhoneSimulatorRemoteClient */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
@@ -83,6 +81,8 @@
 		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				923F258E18EAFB8100A845ED /* DevToolsFoundation.framework */,
+				923F259018EAFB8F00A845ED /* DVTFoundation.framework */,
 				923F258C18EA0B8E00A845ED /* DVTiPhoneSimulatorRemoteClient.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
 			);
