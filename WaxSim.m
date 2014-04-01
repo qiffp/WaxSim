@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 	//	Load the platform SDKs
 	NSError *error;
 	if ([DVTPlatform loadAllPlatformsReturningError:&error] == NO) {
-		NSLog(@"Failed to load platform SDKS: %@", error);
+		fprintf(stderr, "Failed to load platform SDKs: %s\n", [[error localizedDescription] UTF8String]);
 		return 1;
 	}
 
